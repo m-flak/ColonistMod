@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColonistMod", "ColonistMod\ColonistMod.csproj", "{C2A36AB4-ABB4-495B-9A72-4528BD2F075D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE95BB56-C5F9-4A16-BBF0-EED97A4D2973}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2A36AB4-ABB4-495B-9A72-4528BD2F075D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A36AB4-ABB4-495B-9A72-4528BD2F075D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A36AB4-ABB4-495B-9A72-4528BD2F075D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A36AB4-ABB4-495B-9A72-4528BD2F075D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1AACB15A-088B-4A1F-85EC-416ABD4E24F1}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Root>
+    <Entry>
+		<zType>IMPROVEMENTCLASS_COLONY</zType>
+		<Name>TEXT_IMPROVEMENTCLASS_COLONY</Name>
+		<!--<TechPrereq>TECH_STONECUTTING</TechPrereq>-->
+	</Entry>
+</Root>
