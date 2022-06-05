@@ -30,7 +30,7 @@ namespace ColonistMod
         {
             base.Initialize(modSettings);
             this.Owrld = modSettings;
-            modSettings.Factory = new GameFactory();
+            modSettings.Factory = new ModGameFactory();
 
             if (!harmonyLoaded)
             {
@@ -45,7 +45,6 @@ namespace ColonistMod
             Owrld?.RegisterModChange(this.SetupInfosListener);
             Owrld?.App.OnModChanged();
         }
-
 
         private void SetupInfosListener()
         {
