@@ -8,10 +8,6 @@ using HarmonyLib;
 
 using ColonistMod.Info;
 
-// NOTE: IMPROVEMENT NOT CITY. CITY IS TOO TIGHTLY-COUPLED
-// TODO:
-//   1. Change the colonist ability to improve from found
-//   2. Make it a gimped worker that can only build the colony improvement
 
 namespace ColonistMod
 {
