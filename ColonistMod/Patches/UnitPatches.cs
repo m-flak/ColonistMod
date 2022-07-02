@@ -12,7 +12,13 @@ namespace ColonistMod.Patches
         ///<see cref="M:TenCrowns.GameCore.Infos.improvement(TenCrowns.GameCore.ImprovementType)"/>
         private static int improvementEType = -1;
 
-        public static bool Prefix(ref Unit __instance, ref bool __result, ImprovementType eImprovement)
+        public struct State
+        {
+            public bool UnitIsColonist;
+            public bool ImprovementIsColony;
+        }
+
+        public static void Prefix(ref Unit __instance, out State __state, ImprovementType eImprovement)
         {
             if (improvementEType == -1)
             {
@@ -21,22 +27,31 @@ namespace ColonistMod.Patches
                 improvementEType = info.improvements().FindIndex(improvement => improvement.mzType == Constants.ImprovementTypeColony);
             }
 
-            // Only show the colony as buildable for colonists
-            // Also don't allow them to build shrines n stuff
             string unitType = __instance.info().mzType;
-            if (eImprovement == (ImprovementType) improvementEType)
-            {
-                __result = (unitType == Constants.UnitTypeColonist);
-                return false;
-            }
-            else if (unitType == Constants.UnitTypeColonist && eImprovement != (ImprovementType) improvementEType)
-            {
-                // This only seems to disable the options in the UI. :/
-               __result = false;
-                return false;
-            }
+            __state = new State();
+            __state.UnitIsColonist = ( unitType == Constants.UnitTypeColonist );
+            __state.ImprovementIsColony = ( eImprovement == (ImprovementType) improvementEType );
+        }
 
-            return true;
+        public static void Postfix(ref bool __result, State __state)
+        {
+            if (__state.UnitIsColonist && __state.ImprovementIsColony)
+            {
+                // Only show the colony as buildable for colonists
+                __result = true;
+            }
+            else if (__state.UnitIsColonist && !__state.ImprovementIsColony)
+            {
+                // Colonists should only be able to build colonies.
+                // This only seems to disable the options in the UI. :/
+                __result = false;
+            }
+            else if (__state.ImprovementIsColony)
+            {
+                // Regular workers shouldn't be able to build colonies.
+                // This only seems to disable the options in the UI. :/
+                __result = false;
+            }
         }
     }
 }

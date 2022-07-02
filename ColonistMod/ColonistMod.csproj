@@ -66,6 +66,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Info\InfosListener.cs" />
     <Compile Include="ModGameFactory.cs" />
+    <Compile Include="Patches\GamePatches.cs" />
     <Compile Include="Patches\TilePatches.cs" />
     <Compile Include="Patches\UnitPatches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +75,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="State\ImprovementState.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>

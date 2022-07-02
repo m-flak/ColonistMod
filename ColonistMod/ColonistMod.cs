@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using HarmonyLib;
 
 using ColonistMod.Info;
-
+using ColonistMod.State;
 
 namespace ColonistMod
 {
@@ -44,6 +44,20 @@ namespace ColonistMod
 
             Owrld?.RegisterModChange(this.SetupInfosListener);
             Owrld?.App.OnModChanged();
+        }
+
+        public override void OnGameOver()
+        {
+            base.OnGameOver();
+
+            ImprovementState.Reset();
+        }
+
+        public override void OnExitGame()
+        {
+            base.OnGameOver();
+
+            ImprovementState.Reset();
         }
 
         private void SetupInfosListener()
