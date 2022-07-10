@@ -25,14 +25,16 @@ namespace ColonistMod.Patches
             if (tilesImpClassType == (ImprovementClassType)improvementClassEType)
             {
                 Utils.DbgLog("in doImprovementFinished after the colony was built");
-                var buildingPlayer = ImprovementState.GetColonyOwnerBuilder(__instance).Item1;
-                if (buildingPlayer != PlayerType.NONE)
+                var ownerBuilder = ImprovementState.GetColonyOwnerBuilder(__instance);
+                if (ownerBuilder.Item1 != PlayerType.NONE)
                 {
                     ActionType built = (ActionType)Enum.GetValues(typeof(ActionType)).Cast<int>().Max() + Constants.ActionTypeDelta_ColonyBuilt;
                     Utils.DbgLog(String.Format("Sent {0}", built));
-                    ActionData action = new ActionData(built, buildingPlayer);
+                    ActionData action = new ActionData(built, ownerBuilder.Item1);
+
                     // must be serializable
-                    // (?) probably need to replicate improvementstate thru here 
+                    // replicate improvementstate thru here 
+                    action.addValue(ImprovementState.OwnerBuilderAsSerializable(ownerBuilder));
                     action.addValue(__instance.getID());
                     ModGameFactory.CurrentClientManager?.sendAction(action);
                 }
@@ -51,7 +53,6 @@ namespace ColonistMod.Patches
         {
             Utils.DbgLog("In setImprovement");
 
-            //buildingPlayer = ePlayer;
             if (improvementEType == -1)
             {
                 improvementEType = __instance.infos().improvements().FindIndex(improvement => improvement.mzType == Constants.ImprovementTypeColony);
@@ -95,14 +96,14 @@ namespace ColonistMod.Patches
         {
             if (__state.WasColony)
             {
-                var colonyOwner = ImprovementState.GetColonyOwnerBuilder(__instance).Item1;
-                if (colonyOwner != PlayerType.NONE)
+                var (buildingPlayer, _) = ImprovementState.GetColonyOwnerBuilder(__instance);
+                if (buildingPlayer != PlayerType.NONE)
                 {
                     ActionType destroyed = (ActionType)Enum.GetValues(typeof(ActionType)).Cast<int>().Max() + Constants.ActionTypeDelta_ColonyDestroyed;
                     Utils.DbgLog(String.Format("Sent {0}", destroyed));
-                    ActionData action = new ActionData(destroyed, colonyOwner);
+                    ActionData action = new ActionData(destroyed, buildingPlayer);
+
                     // must be serializable
-                    // (?) probably need to replicate improvementstate thru here 
                     action.addValue(__instance.getID());
                     ModGameFactory.CurrentClientManager?.sendAction(action);
                 }

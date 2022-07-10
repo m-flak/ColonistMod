@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TenCrowns.GameCore;
+using Mohawk.SystemCore;
 
 namespace ColonistMod.State
 {
@@ -38,6 +39,21 @@ namespace ColonistMod.State
         public static void RemoveColonyOwnerBuilder(Tile colony)
         {
             colonyOwnerBuilder.Remove(colony.getID());
+        }
+
+        public static Pair<int, int> OwnerBuilderAsSerializable((PlayerType, Unit) ownerBuilder)
+        {
+            var (playerId, realUnit) = ownerBuilder;
+            int unitId = (realUnit != null) ? realUnit.getID() : -1;
+
+            return new Pair<int,int>((int)playerId, unitId);
+        }
+        public static (PlayerType, Unit) OwnerBuilderFromSerializable(Func<int, Unit> findUnitFunc, Pair<int, int> idPair)
+        {
+            (PlayerType, Unit) ownerBuilder;
+            ownerBuilder.Item1 = (PlayerType) idPair.First;
+            ownerBuilder.Item2 = findUnitFunc(idPair.Second);
+            return ownerBuilder;
         }
     }
 }
