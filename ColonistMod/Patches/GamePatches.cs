@@ -68,9 +68,34 @@ namespace ColonistMod.Patches
                 // Remove the territory & clear from state
                 colonyTile.setOwner(PlayerType.NONE, TribeType.NONE, -1);
                 ImprovementState.RemoveColonyOwnerBuilder(colonyTile);
+                // Clear the free territory that came with the colony
+                RemoveTerritoryAroundColony(colonyTile, (x, y) => gameClass?.tileGrid(x, y), 2);
             }
 
             return @this.getAction();
+        }
+
+        internal static void RemoveTerritoryAroundColony(Tile colony, Func<int,int,Tile> tileGridDelegate, int numRings)
+        {
+            int x = colony.getX();
+            int y = colony.getY();
+
+            for (int i = 1; i <= numRings; ++i)
+            {
+                // (x, y +- n)
+                tileGridDelegate(x, y + i).setOwner(PlayerType.NONE, TribeType.NONE, -1);
+                tileGridDelegate(x, y - i).setOwner(PlayerType.NONE, TribeType.NONE, -1);
+
+                // (x +- n, y)
+                tileGridDelegate(x + i, y).setOwner(PlayerType.NONE, TribeType.NONE, -1);
+                tileGridDelegate(x - i, y).setOwner(PlayerType.NONE, TribeType.NONE, -1);
+
+                // (x +- n, y +- n)
+                tileGridDelegate(x + i, y + i).setOwner(PlayerType.NONE, TribeType.NONE, -1);
+                tileGridDelegate(x - i, y - i).setOwner(PlayerType.NONE, TribeType.NONE, -1);
+                tileGridDelegate(x + i, y - i).setOwner(PlayerType.NONE, TribeType.NONE, -1);
+                tileGridDelegate(x - i, y + i).setOwner(PlayerType.NONE, TribeType.NONE, -1);
+            }
         }
 
         private static void AddToNearestCity(Tile tile, PlayerType player)
