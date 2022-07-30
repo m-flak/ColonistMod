@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="ColonistMod.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Info\InfosListener.cs" />
     <Compile Include="ModGameFactory.cs" />
     <Compile Include="Patches\GamePatches.cs" />
     <Compile Include="Patches\TilePatches.cs" />

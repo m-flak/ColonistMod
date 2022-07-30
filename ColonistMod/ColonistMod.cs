@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using HarmonyLib;
 
-using ColonistMod.Info;
 using ColonistMod.State;
 
 namespace ColonistMod
@@ -14,7 +13,6 @@ namespace ColonistMod
     public class ColonistMod : ModEntryPointAdapter
     {
         private ModSettings? Owrld = default;
-        private InfosListener? InfosListener = default;
 
         private static bool harmonyLoaded = false;
 
@@ -41,9 +39,6 @@ namespace ColonistMod
             }
 
             Utils.DbgLog("MOD INITIALIZED");
-
-            Owrld?.RegisterModChange(this.SetupInfosListener);
-            Owrld?.App.OnModChanged();
         }
 
         public override void OnGameOver()
@@ -58,16 +53,6 @@ namespace ColonistMod
             base.OnGameOver();
 
             ImprovementState.Reset();
-        }
-
-        private void SetupInfosListener()
-        {
-            Utils.DbgLog("Enter SetupInfosListener");
-            this.InfosListener = new InfosListener(Owrld);
-            Owrld?.Infos.AddListener(this.InfosListener);
-            Owrld?.Infos.LoadInfo(resetDefaultXMLCache: false);
-
-            Owrld?.UnregisterModChange(this.SetupInfosListener);
         }
     }
 }
